@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VideoFlow - Player Completo</title>
+    <title>Produtos e Serviços</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,10 +14,10 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0a0a0a;
-            color: white;
-            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f9fc;
+            color: #333;
+            line-height: 1.6;
         }
         
         .container {
@@ -25,1290 +27,324 @@
         }
         
         header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            border-bottom: 1px solid #333;
-            margin-bottom: 30px;
-        }
-        
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-            background: linear-gradient(45deg, #ff0000, #ff6b6b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .controls {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-        
-        .adblock-toggle, .pip-toggle, .background-toggle {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: #222;
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-        }
-        
-        .toggle-switch {
-            width: 40px;
-            height: 20px;
-            background: #444;
-            border-radius: 10px;
-            position: relative;
-            transition: all 0.3s;
-        }
-        
-        .toggle-switch.active {
-            background: #00ff00;
-        }
-        
-        .toggle-switch::after {
-            content: '';
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 16px;
-            height: 16px;
-            background: white;
-            border-radius: 50%;
-            transition: all 0.3s;
-        }
-        
-        .toggle-switch.active::after {
-            left: 22px;
-        }
-        
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 400px;
-            gap: 30px;
-            min-height: 80vh;
-        }
-        
-        .video-player-section {
-            background: #111;
-            border-radius: 15px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .video-wrapper {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #000;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-            min-height: 500px;
-        }
-        
-        .video-container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .video-embed, .video-player {
-            max-width: 100%;
-            max-height: 100%;
-            border: none;
-        }
-        
-        .video-player {
-            width: 100%;
-            height: 100%;
-            outline: none;
-        }
-        
-        .empty-video {
             text-align: center;
-            color: #666;
-            padding: 40px;
-        }
-        
-        .empty-video i {
-            font-size: 60px;
-            margin-bottom: 20px;
-            opacity: 0.3;
-        }
-        
-        .video-info {
-            margin-top: 20px;
-            padding: 20px;
-            background: #1a1a1a;
-            border-radius: 10px;
-        }
-        
-        .video-title {
-            font-size: 22px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        
-        .video-meta {
-            display: flex;
-            gap: 20px;
-            color: #999;
-            font-size: 14px;
-        }
-        
-        /* Status indicators */
-        .status-indicators {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            z-index: 10;
-        }
-        
-        .status-indicator {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        .status-indicator.active {
-            background: rgba(0, 255, 0, 0.2);
-            color: #00ff00;
-        }
-        
-        .status-indicator.pip-active {
-            background: rgba(255, 107, 107, 0.2);
-            color: #ff6b6b;
-        }
-        
-        /* PIP Controls */
-        .pip-controls {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            display: flex;
-            gap: 10px;
-            z-index: 10;
-        }
-        
-        .pip-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: none;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-        
-        .pip-btn:hover {
-            background: rgba(255, 107, 107, 0.7);
-            transform: scale(1.1);
-        }
-        
-        /* Next video countdown */
-        .next-countdown {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 14px;
-            z-index: 10;
-            display: none;
-        }
-        
-        /* Playlist Section */
-        .playlist-section {
-            background: #111;
-            border-radius: 15px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .playlist-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #333;
-        }
-        
-        .playlist-title {
-            font-size: 20px;
-            font-weight: bold;
-        }
-        
-        .playlist-actions {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .action-btn {
-            background: #222;
-            border: none;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: all 0.3s;
-        }
-        
-        .action-btn:hover {
-            background: #333;
-            transform: translateY(-2px);
-        }
-        
-        .action-btn.share {
-            background: linear-gradient(45deg, #007bff, #0056b3);
-        }
-        
-        /* Tab system */
-        .tab-container {
-            margin-bottom: 20px;
-        }
-        
-        .tab-buttons {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 15px;
-            background: #1a1a1a;
-            padding: 5px;
-            border-radius: 10px;
-        }
-        
-        .tab-btn {
-            flex: 1;
-            padding: 10px;
-            background: transparent;
-            border: none;
-            color: #999;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.3s;
-        }
-        
-        .tab-btn.active {
-            background: #333;
-            color: white;
-        }
-        
-        .tab-content {
-            display: none;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        /* Upload area */
-        .upload-area {
-            border: 2px dashed #444;
-            border-radius: 10px;
             padding: 40px 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-bottom: 15px;
-        }
-        
-        .upload-area:hover {
-            border-color: #ff6b6b;
-            background: rgba(255, 107, 107, 0.05);
-        }
-        
-        .upload-icon {
-            font-size: 40px;
-            color: #666;
-            margin-bottom: 15px;
-        }
-        
-        /* Forms and inputs */
-        .add-video-form {
-            background: #1a1a1a;
-            padding: 20px;
-            border-radius: 10px;
-        }
-        
-        .input-group {
-            margin-bottom: 15px;
-        }
-        
-        .input-label {
-            display: block;
-            margin-bottom: 8px;
-            color: #ccc;
-            font-size: 14px;
-        }
-        
-        .url-input, .embed-input {
-            width: 100%;
-            padding: 12px;
-            background: #222;
-            border: 1px solid #333;
-            border-radius: 8px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
             color: white;
-            font-size: 14px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
         
-        .add-btn {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(45deg, #ff0000, #ff6b6b);
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .playlist-items {
-            flex: 1;
-            overflow-y: auto;
-            max-height: 400px;
-        }
-        
-        .playlist-item {
-            display: flex;
-            align-items: center;
-            padding: 12px;
-            background: #1a1a1a;
-            border-radius: 8px;
+        header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
             margin-bottom: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 1px solid transparent;
         }
         
-        .playlist-item:hover {
-            background: #222;
-            transform: translateX(5px);
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
         }
         
-        .playlist-item.active {
-            background: #2a2a2a;
-            border-color: #ff0000;
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
         }
         
-        .item-number {
-            width: 30px;
-            height: 30px;
-            background: #333;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            font-size: 14px;
-            font-weight: bold;
-        }
-        
-        .item-info {
-            flex: 1;
-            min-width: 0;
-        }
-        
-        .item-title {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 4px;
-            white-space: nowrap;
+        .product-card {
+            background-color: white;
+            border-radius: 16px;
             overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        
-        .item-platform {
-            font-size: 12px;
-            color: #999;
-        }
-        
-        .remove-btn {
-            background: none;
-            border: none;
-            color: #ff6b6b;
-            cursor: pointer;
-            padding: 5px;
-            opacity: 0.7;
-            transition: opacity 0.3s;
-        }
-        
-        .remove-btn:hover {
-            opacity: 1;
-        }
-        
-        /* Player controls */
-        .player-controls {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
-            gap: 15px;
-            margin-top: 20px;
-            justify-content: center;
+            flex-direction: column;
         }
         
-        .control-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: none;
-            background: #222;
-            color: white;
-            cursor: pointer;
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .product-header {
+            padding: 25px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            text-align: center;
+        }
+        
+        .product-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #2575fc;
+        }
+        
+        .product-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .product-content {
+            padding: 25px;
+            flex-grow: 1;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            transition: all 0.3s;
+            flex-direction: column;
         }
         
-        .control-btn:hover {
-            background: #333;
-            transform: scale(1.1);
+        .product-description {
+            color: #5a6c7d;
+            margin-bottom: 20px;
+            font-size: 1rem;
+            line-height: 1.7;
         }
         
-        /* Progress bar */
-        .video-progress {
-            width: 100%;
-            height: 4px;
-            background: #333;
-            margin-top: 10px;
-            border-radius: 2px;
-            overflow: hidden;
-            display: none;
-        }
-        
-        .progress-bar {
-            height: 100%;
-            background: #ff0000;
-            width: 0%;
-            transition: width 0.1s;
-        }
-        
-        /* Upload progress */
-        .upload-progress {
-            width: 100%;
-            height: 4px;
-            background: #333;
-            border-radius: 2px;
-            overflow: hidden;
-            margin-top: 10px;
-            display: none;
-        }
-        
-        .upload-progress-bar {
-            height: 100%;
-            background: #4285f4;
-            width: 0%;
-            transition: width 0.3s;
-        }
-        
-        /* Media Session API notification */
-        .media-session-notice {
-            position: fixed;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 107, 107, 0.9);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            z-index: 1002;
-            display: none;
-            animation: fadeInOut 3s ease;
-        }
-        
-        @keyframes fadeInOut {
-            0%, 100% { opacity: 0; }
-            10%, 90% { opacity: 1; }
-        }
-        
-        /* Service Worker notice */
-        .service-worker-notice {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(66, 133, 244, 0.9);
-            color: white;
-            padding: 10px 15px;
+        .price-tag {
+            background-color: #f8f9fa;
+            padding: 15px;
             border-radius: 10px;
-            font-size: 12px;
-            z-index: 1002;
-            display: none;
+            text-align: center;
+            margin: 15px 0;
+            border-left: 4px solid #2575fc;
         }
         
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .video-wrapper {
-                min-height: 400px;
-            }
-            
-            .controls {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
+        .price {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+        
+        .price-free {
+            color: #27ae60;
+        }
+        
+        .price-paid {
+            color: #e74c3c;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            margin-top: auto;
+        }
+        
+        .btn-primary {
+            background-color: #2575fc;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #1a68e8;
+            box-shadow: 0 5px 15px rgba(37, 117, 252, 0.3);
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .badge-paid {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: #e74c3c;
+        }
+        
+        .badge-free {
+            background-color: rgba(39, 174, 96, 0.1);
+            color: #27ae60;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+            margin-top: 30px;
+        }
+        
+        .payment-notice {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 30px;
+            font-size: 0.95rem;
         }
         
         @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .product-card {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+        }
+        
+        @media (max-width: 480px) {
             .container {
-                padding: 10px;
+                padding: 15px;
             }
             
             header {
-                flex-direction: column;
-                gap: 15px;
+                padding: 30px 15px;
             }
             
-            .video-wrapper {
-                min-height: 300px;
+            header h1 {
+                font-size: 1.8rem;
             }
-            
-            .status-indicators {
-                top: 5px;
-                left: 5px;
-            }
-            
-            .pip-controls {
-                bottom: 10px;
-                left: 10px;
-            }
-        }
-        
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #111;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: #333;
-            border-radius: 4px;
-        }
-        
-        /* File input */
-        .file-input {
-            display: none;
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <div class="logo">
-                <i class="fas fa-play-circle"></i> VideoFlow
-            </div>
-            <div class="controls">
-                <div class="adblock-toggle" onclick="toggleAdBlock()">
-                    <span>AdBlock</span>
-                    <div class="toggle-switch active" id="adblockToggle"></div>
-                </div>
-                <div class="pip-toggle" onclick="togglePIPSupport()">
-                    <span>PIP</span>
-                    <div class="toggle-switch" id="pipToggle"></div>
-                </div>
-                <div class="background-toggle" onclick="toggleBackgroundPlayback()">
-                    <span>Segundo Plano</span>
-                    <div class="toggle-switch" id="backgroundToggle"></div>
-                </div>
-            </div>
+            <h1>Produtos e Serviços</h1>
+            <p>Escolha entre nossas soluções especializadas para atender suas necessidades</p>
         </header>
         
-        <div class="main-content">
-            <section class="video-player-section">
-                <div class="video-wrapper">
-                    <!-- Status Indicators -->
-                    <div class="status-indicators">
-                        <div class="status-indicator active" id="autoAdvanceStatus">
-                            <i class="fas fa-forward"></i> Auto-Advance
-                        </div>
-                        <div class="status-indicator" id="adblockStatus">
-                            <i class="fas fa-shield-alt"></i> AdBlock
-                        </div>
-                        <div class="status-indicator" id="pipStatus">
-                            <i class="fas fa-picture-in-picture"></i> PIP
-                        </div>
-                        <div class="status-indicator" id="backgroundStatus">
-                            <i class="fas fa-mobile-alt"></i> Segundo Plano
-                        </div>
+        <div class="products-grid">
+            <!-- Produto 1: Unlocktool -->
+            <div class="product-card">
+                <div class="product-header">
+                    <div class="product-icon">
+                        <i class="fas fa-unlock-alt"></i>
                     </div>
-                    
-                    <!-- PIP Controls -->
-                    <div class="pip-controls" id="pipControls" style="display: none;">
-                        <button class="pip-btn" onclick="togglePictureInPicture()" title="Picture-in-Picture">
-                            <i class="fas fa-external-link-alt"></i>
-                        </button>
-                        <button class="pip-btn" onclick="enterFullscreen()" title="Tela Cheia">
-                            <i class="fas fa-expand"></i>
-                        </button>
-                    </div>
-                    
-                    <!-- Next Video Countdown -->
-                    <div class="next-countdown" id="nextCountdown">
-                        Próximo em: <span id="countdownSeconds">5</span>s
-                    </div>
-                    
-                    <!-- Video Container -->
-                    <div class="video-container" id="videoContainer">
-                        <div class="empty-video">
-                            <i class="fas fa-video"></i>
-                            <h3>Nenhum vídeo selecionado</h3>
-                            <p>Adicione vídeos à playlist para começar</p>
-                        </div>
-                    </div>
+                    <h2 class="product-title">Unlocktool</h2>
                 </div>
-                
-                <!-- Progress Bar -->
-                <div class="video-progress" id="videoProgress">
-                    <div class="progress-bar" id="progressBar"></div>
-                </div>
-                
-                <!-- Video Info -->
-                <div class="video-info" id="videoInfo" style="display: none;">
-                    <h2 class="video-title" id="currentVideoTitle">Título do Vídeo</h2>
-                    <div class="video-meta">
-                        <span id="currentVideoPlatform">YouTube</span>
-                        <span id="currentVideoDuration">0:00</span>
-                        <span id="currentVideoSize"></span>
+                <div class="product-content">
+                    <div class="badge badge-paid">Pago</div>
+                    <p class="product-description">
+                        Ferramenta completa para desbloqueio de dispositivos. Compatível com diversos modelos e marcas. 
+                        Solução eficiente e confiável para profissionais da área.
+                    </p>
+                    <div class="price-tag">
+                        <div class="price price-paid">R$ 180,00</div>
                     </div>
+                    <a href="https://pixgo.org/api/v1/checkout/checkout-public.php?id=0f85eecacd26bd3d194f4b00f9512245" class="btn btn-primary" target="_blank">
+                        <i class="fas fa-shopping-cart"></i> Comprar Agora
+                    </a>
                 </div>
-                
-                <!-- Player Controls -->
-                <div class="player-controls" id="playerControls" style="display: none;">
-                    <button class="control-btn" onclick="playPrevious()">
-                        <i class="fas fa-step-backward"></i>
-                    </button>
-                    <button class="control-btn" onclick="togglePlayPause()" id="playPauseBtn">
-                        <i class="fas fa-play"></i>
-                    </button>
-                    <button class="control-btn" onclick="playNext()">
-                        <i class="fas fa-step-forward"></i>
-                    </button>
-                    <button class="control-btn" onclick="toggleMute()" id="muteBtn">
-                        <i class="fas fa-volume-up"></i>
-                    </button>
-                </div>
-            </section>
+            </div>
             
-            <!-- Playlist Section -->
-            <section class="playlist-section">
-                <div class="playlist-header">
-                    <h2 class="playlist-title">
-                        <i class="fas fa-list"></i> Playlist
-                    </h2>
-                    <div class="playlist-actions">
-                        <button class="action-btn" onclick="clearPlaylist()">
-                            <i class="fas fa-trash"></i> Limpar
-                        </button>
-                        <button class="action-btn share" onclick="sharePlaylist()">
-                            <i class="fas fa-share"></i> Compartilhar
-                        </button>
+            <!-- Produto 2: Remoto -->
+            <div class="product-card">
+                <div class="product-header">
+                    <div class="product-icon">
+                        <i class="fas fa-laptop-house"></i>
                     </div>
+                    <h2 class="product-title">Remoto</h2>
                 </div>
-                
-                <!-- Tab System -->
-                <div class="tab-container">
-                    <div class="tab-buttons">
-                        <button class="tab-btn active" onclick="switchTab('link')">
-                            <i class="fas fa-link"></i> Link
-                        </button>
-                        <button class="tab-btn" onclick="switchTab('upload')">
-                            <i class="fas fa-upload"></i> Upload
-                        </button>
+                <div class="product-content">
+                    <div class="badge badge-free">Gratuito</div>
+                    <p class="product-description">
+                        Serviço de suporte remoto para configurações e troubleshooting. 
+                        Conecte-se com nossos especialistas para resolver problemas técnicos à distância.
+                    </p>
+                    <div class="price-tag">
+                        <div class="price price-free">R$ 0,00</div>
                     </div>
-                    
-                    <!-- Link Tab -->
-                    <div class="tab-content active" id="tabLink">
-                        <div class="add-video-form">
-                            <div class="input-group">
-                                <label class="input-label">Cole o link do vídeo:</label>
-                                <input type="text" class="url-input" id="videoUrl" 
-                                       placeholder="https://youtube.com/watch?v=... ou https://drive.google.com/file/d/...">
-                            </div>
-                            <button class="add-btn" onclick="addVideoFromLink()">
-                                <i class="fas fa-plus"></i> Adicionar Vídeo
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Upload Tab -->
-                    <div class="tab-content" id="tabUpload">
-                        <div class="add-video-form">
-                            <input type="file" class="file-input" id="videoUpload" accept="video/*" multiple>
-                            <div class="upload-area" onclick="document.getElementById('videoUpload').click()">
-                                <div class="upload-icon">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                </div>
-                                <div class="upload-text">
-                                    <strong>Clique para selecionar vídeos</strong>
-                                </div>
-                                <div class="upload-subtext">
-                                    Arraste e solte ou clique para fazer upload
-                                </div>
-                            </div>
-                            <div class="upload-progress" id="uploadProgress">
-                                <div class="upload-progress-bar" id="uploadProgressBar"></div>
-                            </div>
-                        </div>
-                    </div>
+                    <a href="https://pixgo.org/api/v1/checkout/checkout-public.php?id=039aaec4be0c743957de394b38cfdc18" class="btn btn-secondary" target="_blank">
+                        <i class="fas fa-external-link-alt"></i> Acessar Serviço
+                    </a>
                 </div>
-                
-                <!-- Playlist Items -->
-                <div class="playlist-items" id="playlistItems">
-                    <!-- Playlist items will be added here -->
+            </div>
+            
+            <!-- Produto 3: Consultoria -->
+            <div class="product-card">
+                <div class="product-header">
+                    <div class="product-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h2 class="product-title">Consultoria</h2>
                 </div>
-            </section>
+                <div class="product-content">
+                    <div class="badge badge-free">Gratuito</div>
+                    <p class="product-description">
+                        Consultoria especializada para tirar dúvidas e orientar sobre nossos produtos e serviços. 
+                        Suporte personalizado para otimizar o uso de nossas soluções.
+                    </p>
+                    <div class="price-tag">
+                        <div class="price price-free">R$ 0,00</div>
+                    </div>
+                    <a href="https://pixgo.org/api/v1/checkout/checkout-public.php?id=0552132f59fb7e592df966cf632c1eb3" class="btn btn-secondary" target="_blank">
+                        <i class="fas fa-external-link-alt"></i> Agendar Consultoria
+                    </a>
+                </div>
+            </div>
         </div>
+        
+        <div class="payment-notice">
+            <p><i class="fas fa-info-circle"></i> <strong>Informação importante:</strong> Todos os pagamentos são processados de forma segura através do nosso sistema de pagamento. Você será redirecionado para uma página segura para concluir sua compra.</p>
+        </div>
+        
+        <footer>
+            <p>&copy; 2023 Produtos e Serviços. Todos os direitos reservados.</p>
+            <p>Em caso de dúvidas, entre em contato conosco.</p>
+        </footer>
     </div>
     
-    <!-- Notifications -->
-    <div class="media-session-notice" id="mediaSessionNotice">
-        <i class="fas fa-music"></i> Agora tocando em segundo plano
-    </div>
-    
-    <div class="service-worker-notice" id="serviceWorkerNotice">
-        <i class="fas fa-bolt"></i> Reprodução em segundo plano ativada
-    </div>
-
     <script>
-        // ===== STATE MANAGEMENT =====
-        let playlist = [];
-        let currentVideoIndex = 0;
-        let isAdBlockEnabled = true;
-        let isAutoAdvanceEnabled = true;
-        let isPIPEnabled = false;
-        let isBackgroundPlaybackEnabled = false;
-        let isPlaying = false;
-        let shareableLink = '';
-        let currentVideoPlayer = null;
-        let currentTab = 'link';
-        let isInPiP = false;
-        let isFullscreen = false;
-        
-        // Audio context for background playback
-        let audioContext = null;
-        let mediaElementSource = null;
-        let backgroundAudio = null;
-        
-        // Service Worker for background playback
-        let serviceWorkerRegistered = false;
-        
-        // ===== INITIALIZATION =====
-        async function init() {
-            // Load playlist from localStorage
-            const savedPlaylist = localStorage.getItem('videoflow_playlist');
-            if (savedPlaylist) {
-                try {
-                    playlist = JSON.parse(savedPlaylist);
-                    renderPlaylist();
-                    if (playlist.length > 0) {
-                        playVideo(0);
+        // Adicionar efeito de confirmação ao clicar nos botões
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const productName = this.closest('.product-card').querySelector('.product-title').textContent;
+                
+                if (this.classList.contains('btn-primary')) {
+                    // Para produto pago
+                    if (!confirm(`Você está sendo redirecionado para a página de pagamento do produto: ${productName}. Deseja continuar?`)) {
+                        e.preventDefault();
                     }
-                } catch (e) {
-                    console.error('Erro ao carregar playlist:', e);
-                }
-            }
-            
-            // Setup file upload
-            document.getElementById('videoUpload').addEventListener('change', handleFileUpload);
-            
-            // Setup drag and drop
-            setupDragAndDrop();
-            
-            // Register Service Worker for background playback
-            await registerServiceWorker();
-            
-            // Setup visibility change listener for background playback
-            document.addEventListener('visibilitychange', handleVisibilityChange);
-            
-            console.log('🎬 VideoFlow inicializado com PIP e reprodução em segundo plano');
-        }
-        
-        // ===== SERVICE WORKER REGISTRATION =====
-        async function registerServiceWorker() {
-            if ('serviceWorker' in navigator && 'MediaSession' in navigator) {
-                try {
-                    // Create Service Worker script
-                    const swScript = `
-                        self.addEventListener('message', event => {
-                            if (event.data.type === 'PLAYBACK_INFO') {
-                                // Handle playback info for background
-                                console.log('Service Worker: Received playback info');
-                            }
-                        });
-                        
-                        self.addEventListener('notificationclick', event => {
-                            event.notification.close();
-                            clients.openWindow('/');
-                        });
-                    `;
-                    
-                    // Create blob URL for Service Worker
-                    const blob = new Blob([swScript], { type: 'application/javascript' });
-                    const swURL = URL.createObjectURL(blob);
-                    
-                    // Register Service Worker
-                    const registration = await navigator.serviceWorker.register(swURL);
-                    serviceWorkerRegistered = true;
-                    
-                    document.getElementById('serviceWorkerNotice').style.display = 'block';
-                    setTimeout(() => {
-                        document.getElementById('serviceWorkerNotice').style.display = 'none';
-                    }, 3000);
-                    
-                    console.log('✅ Service Worker registrado');
-                } catch (error) {
-                    console.log('❌ Service Worker não suportado:', error);
-                }
-            }
-        }
-        
-        // ===== PICTURE-IN-PICTURE =====
-        function togglePIPSupport() {
-            if (!document.pictureInPictureEnabled) {
-                showNotification('PIP não suportado neste navegador', 'error');
-                return;
-            }
-            
-            isPIPEnabled = !isPIPEnabled;
-            document.getElementById('pipToggle').classList.toggle('active', isPIPEnabled);
-            document.getElementById('pipStatus').classList.toggle('active', isPIPEnabled);
-            
-            // Show/hide PIP controls
-            document.getElementById('pipControls').style.display = isPIPEnabled ? 'flex' : 'none';
-            
-            showNotification(isPIPEnabled ? 'PIP ativado' : 'PIP desativado');
-        }
-        
-        async function togglePictureInPicture() {
-            if (!currentVideoPlayer || !isPIPEnabled) return;
-            
-            try {
-                if (!document.pictureInPictureElement) {
-                    // Enter PIP
-                    await currentVideoPlayer.requestPictureInPicture();
-                    isInPiP = true;
-                    document.getElementById('pipStatus').classList.add('pip-active');
-                    showNotification('Vídeo em Picture-in-Picture');
                 } else {
-                    // Exit PIP
-                    await document.exitPictureInPicture();
-                    isInPiP = false;
-                    document.getElementById('pipStatus').classList.remove('pip-active');
-                }
-            } catch (error) {
-                console.error('Erro no PIP:', error);
-                showNotification('Erro ao ativar PIP', 'error');
-            }
-        }
-        
-        // Handle PIP events
-        function setupPIPListeners() {
-            if (!currentVideoPlayer) return;
-            
-            currentVideoPlayer.addEventListener('enterpictureinpicture', () => {
-                isInPiP = true;
-                document.getElementById('pipStatus').classList.add('pip-active');
-            });
-            
-            currentVideoPlayer.addEventListener('leavepictureinpicture', () => {
-                isInPiP = false;
-                document.getElementById('pipStatus').classList.remove('pip-active');
-            });
-        }
-        
-        // ===== BACKGROUND PLAYBACK =====
-        function toggleBackgroundPlayback() {
-            isBackgroundPlaybackEnabled = !isBackgroundPlaybackEnabled;
-            document.getElementById('backgroundToggle').classList.toggle('active', isBackgroundPlaybackEnabled);
-            document.getElementById('backgroundStatus').classList.toggle('active', isBackgroundPlaybackEnabled);
-            
-            if (isBackgroundPlaybackEnabled && currentVideoPlayer) {
-                setupBackgroundPlayback();
-            }
-            
-            showNotification(isBackgroundPlaybackEnabled ? 
-                'Reprodução em segundo plano ativada' : 
-                'Reprodução em segundo plano desativada');
-        }
-        
-        function setupBackgroundPlayback() {
-            if (!currentVideoPlayer || !isBackgroundPlaybackEnabled) return;
-            
-            // Setup Media Session API for mobile background playback
-            if ('mediaSession' in navigator) {
-                navigator.mediaSession.metadata = new MediaMetadata({
-                    title: playlist[currentVideoIndex]?.title || 'VideoFlow',
-                    artist: 'VideoFlow Player',
-                    album: 'Playlist',
-                    artwork: [
-                        { src: 'https://via.placeholder.com/96x96', sizes: '96x96', type: 'image/png' },
-                        { src: 'https://via.placeholder.com/128x128', sizes: '128x128', type: 'image/png' },
-                        { src: 'https://via.placeholder.com/192x192', sizes: '192x192', type: 'image/png' },
-                        { src: 'https://via.placeholder.com/256x256', sizes: '256x256', type: 'image/png' },
-                        { src: 'https://via.placeholder.com/384x384', sizes: '384x384', type: 'image/png' },
-                        { src: 'https://via.placeholder.com/512x512', sizes: '512x512', type: 'image/png' },
-                    ]
-                });
-                
-                navigator.mediaSession.setActionHandler('play', () => {
-                    currentVideoPlayer.play();
-                    updateMediaSessionPlaybackState('playing');
-                });
-                
-                navigator.mediaSession.setActionHandler('pause', () => {
-                    currentVideoPlayer.pause();
-                    updateMediaSessionPlaybackState('paused');
-                });
-                
-                navigator.mediaSession.setActionHandler('previoustrack', playPrevious);
-                navigator.mediaSession.setActionHandler('nexttrack', playNext);
-                
-                // Show notification
-                document.getElementById('mediaSessionNotice').style.display = 'block';
-                setTimeout(() => {
-                    document.getElementById('mediaSessionNotice').style.display = 'none';
-                }, 3000);
-            }
-            
-            // Create silent audio context for iOS background playback
-            if (!audioContext && typeof AudioContext !== 'undefined') {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                
-                if (currentVideoPlayer) {
-                    mediaElementSource = audioContext.createMediaElementSource(currentVideoPlayer);
-                    mediaElementSource.connect(audioContext.destination);
-                }
-            }
-        }
-        
-        function updateMediaSessionPlaybackState(state) {
-            if ('mediaSession' in navigator) {
-                navigator.mediaSession.playbackState = state;
-            }
-        }
-        
-        function handleVisibilityChange() {
-            if (document.hidden && isBackgroundPlaybackEnabled && currentVideoPlayer) {
-                // Page is hidden, keep audio playing
-                if (audioContext && audioContext.state === 'suspended') {
-                    audioContext.resume();
-                }
-            }
-        }
-        
-        // ===== FULLSCREEN =====
-        function enterFullscreen() {
-            const videoContainer = document.querySelector('.video-wrapper');
-            
-            if (!document.fullscreenElement) {
-                if (videoContainer.requestFullscreen) {
-                    videoContainer.requestFullscreen();
-                } else if (videoContainer.webkitRequestFullscreen) {
-                    videoContainer.webkitRequestFullscreen();
-                } else if (videoContainer.mozRequestFullScreen) {
-                    videoContainer.mozRequestFullScreen();
-                }
-                isFullscreen = true;
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if (document.webkitExitFullscreen) {
-                    document.webkitExitFullscreen();
-                } else if (document.mozCancelFullScreen) {
-                    document.mozCancelFullScreen();
-                }
-                isFullscreen = false;
-            }
-        }
-        
-        // ===== AUTO-ADVANCE SYSTEM =====
-        function toggleAutoAdvance() {
-            isAutoAdvanceEnabled = !isAutoAdvanceEnabled;
-            document.getElementById('autoAdvanceStatus').classList.toggle('active', isAutoAdvanceEnabled);
-            showNotification(isAutoAdvanceEnabled ? 'Auto-advance ativado' : 'Auto-advance desativado');
-        }
-        
-        function setupAutoAdvance(videoElement) {
-            if (!videoElement) return;
-            
-            videoElement.addEventListener('ended', () => {
-                if (isAutoAdvanceEnabled) {
-                    // Show countdown before auto-advance
-                    showNextCountdown();
-                }
-            });
-            
-            // For embeds, use time update to detect end
-            videoElement.addEventListener('timeupdate', () => {
-                if (!isAutoAdvanceEnabled) return;
-                
-                const timeRemaining = videoElement.duration - videoElement.currentTime;
-                if (timeRemaining < 5 && timeRemaining > 0) {
-                    showNextCountdown(Math.ceil(timeRemaining));
-                }
-            });
-        }
-        
-        function showNextCountdown(seconds = 5) {
-            const countdownElement = document.getElementById('nextCountdown');
-            const secondsElement = document.getElementById('countdownSeconds');
-            
-            secondsElement.textContent = seconds;
-            countdownElement.style.display = 'block';
-            
-            let countdown = seconds;
-            const countdownInterval = setInterval(() => {
-                countdown--;
-                secondsElement.textContent = countdown;
-                
-                if (countdown <= 0) {
-                    clearInterval(countdownInterval);
-                    countdownElement.style.display = 'none';
-                    if (isAutoAdvanceEnabled) {
-                        playNext();
+                    // Para produtos gratuitos
+                    if (!confirm(`Você está sendo redirecionado para a página do serviço: ${productName}. Deseja continuar?`)) {
+                        e.preventDefault();
                     }
                 }
-            }, 1000);
-        }
+            });
+        });
         
-        // ===== VIDEO PLAYBACK =====
-        function playVideo(index) {
-            if (index < 0 || index >= playlist.length) return;
+        // Adicionar animação de carregamento suave
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
             
-            currentVideoIndex = index;
-            const video = playlist[index];
-            
-            // Stop previous playback
-            if (currentVideoPlayer) {
-                currentVideoPlayer.pause();
-                currentVideoPlayer = null;
-            }
-            
-            // Update UI
-            renderPlaylist();
-            updateVideoInfo(video);
-            
-            // Create player based on type
-            let playerHtml = '';
-            
-            if (video.type === 'local') {
-                playerHtml = `
-                    <video class="video-player" id="localVideoPlayer" controls autoplay playsinline>
-                        <source src="${video.dataUrl}" type="${video.mimeType}">
-                        Seu navegador não suporta vídeo HTML5.
-                    </video>
-                `;
-                document.getElementById('videoProgress').style.display = 'block';
-                document.getElementById('playerControls').style.display = 'flex';
-            } else {
-                // Embed player
-                const embed = generateEmbed(video);
-                playerHtml = isAdBlockEnabled ? applyAdBlockFilters(embed) : embed;
-                document.getElementById('videoProgress').style.display = 'none';
-                document.getElementById('playerControls').style.display = 'flex';
-            }
-            
-            // Display video
-            document.getElementById('videoContainer').innerHTML = playerHtml;
-            document.getElementById('videoInfo').style.display = 'block';
-            
-            // Setup local video player
-            if (video.type === 'local') {
-                setTimeout(() => {
-                    const videoPlayer = document.getElementById('localVideoPlayer');
-                    if (videoPlayer) {
-                        currentVideoPlayer = videoPlayer;
-                        
-                        // Setup event listeners
-                        setupPIPListeners();
-                        setupAutoAdvance(videoPlayer);
-                        
-                        if (isBackgroundPlaybackEnabled) {
-                            setupBackgroundPlayback();
-                        }
-                        
-                        // Try to get duration
-                        videoPlayer.addEventListener('loadedmetadata', () => {
-                            if (video.duration === '?' && !isNaN(videoPlayer.duration)) {
-                                video.duration = formatDuration(videoPlayer.duration);
-                                updateVideoInfo(video);
-                                savePlaylist();
-                                renderPlaylist();
-                            }
-                        });
-                        
-                        // Update progress
-                        videoPlayer.addEventListener('timeupdate', () => {
-                            const progress = (videoPlayer.currentTime / videoPlayer.duration) * 100;
-                            document.getElementById('progressBar').style.width = `${progress}%`;
-                        });
-                    }
-                }, 100);
-            }
-            
-            // Save last played
-            localStorage.setItem('videoflow_last_played', index);
-        }
-        
-        // ===== PLAYER CONTROLS =====
-        function playPrevious() {
-            if (playlist.length === 0) return;
-            const prevIndex = (currentVideoIndex - 1 + playlist.length) % playlist.length;
-            playVideo(prevIndex);
-        }
-        
-        function playNext() {
-            if (playlist.length === 0) return;
-            const nextIndex = (currentVideoIndex + 1) % playlist.length;
-            playVideo(nextIndex);
-        }
-        
-        function togglePlayPause() {
-            if (!currentVideoPlayer) return;
-            
-            if (currentVideoPlayer.paused) {
-                currentVideoPlayer.play();
-                document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-pause"></i>';
-                updateMediaSessionPlaybackState('playing');
-            } else {
-                currentVideoPlayer.pause();
-                document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-play"></i>';
-                updateMediaSessionPlaybackState('paused');
-            }
-        }
-        
-        function toggleMute() {
-            if (!currentVideoPlayer) return;
-            
-            currentVideoPlayer.muted = !currentVideoPlayer.muted;
-            document.getElementById('muteBtn').innerHTML = currentVideoPlayer.muted ? 
-                '<i class="fas fa-volume-mute"></i>' : 
-                '<i class="fas fa-volume-up"></i>';
-        }
-        
-        // ===== UTILITY FUNCTIONS =====
-        function generateEmbed(video) {
-            const platforms = {
-                'youtube': (id) => `
-                    <iframe class="video-embed"
-                        src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen>
-                    </iframe>`,
-                'vimeo': (id) => `
-                    <iframe class="video-embed"
-                        src="https://player.vimeo.com/video/${id}?autoplay=1"
-                        frameborder="0"
-                        allow="autoplay; fullscreen; picture-in-picture"
-                        allowfullscreen>
-                    </iframe>`,
-                'google-drive': (id) => `
-                    <iframe class="video-embed"
-                        src="https://drive.google.com/file/d/${id}/preview"
-                        frameborder="0"
-                        allow="autoplay"
-                        allowfullscreen>
-                    </iframe>`
-            };
-            
-            if (video.platform === 'custom') return video.embedCode;
-            if (platforms[video.platform]) return platforms[video.platform](video.videoId);
-            
-            return `<p>Plataforma não suportada: ${video.platform}</p>`;
-        }
-        
-        function applyAdBlockFilters(html) {
-            if (!isAdBlockEnabled) return html;
-            
-            return html
-                .replace(/ads\.[^"']+/gi, 'blocked-ad-server')
-                .replace(/doubleclick\.net/gi, 'blocked-ad-server')
-                .replace(/googlesyndication\.com/gi, 'blocked-ad-server')
-                .replace('youtube.com', 'youtube-nocookie.com');
-        }
-        
-        function formatDuration(seconds) {
-            const mins = Math.floor(seconds / 60);
-            const secs = Math.floor(seconds % 60);
-            return `${mins}:${secs.toString().padStart(2, '0')}`;
-        }
-        
-        // ===== UI FUNCTIONS =====
-        function showNotification(message, type = 'success') {
-            // Simple notification implementation
-            const notification = document.createElement('div');
-            notification.textContent = message;
-            notification.style.cssText = `
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                background: ${type === 'error' ? '#ff6b6b' : '#00ff00'};
-                color: ${type === 'error' ? 'white' : '#000'};
-                padding: 12px 20px;
-                border-radius: 8px;
-                font-weight: bold;
-                z-index: 1001;
-                animation: slideIn 0.3s ease;
-            `;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease';
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
-        }
-        
-        // Add CSS for animations
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            @keyframes slideOut {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
-        
-        // ===== INITIALIZE =====
-        window.addEventListener('DOMContentLoaded', init);
+            setTimeout(function() {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
     </script>
 </body>
 </html>
