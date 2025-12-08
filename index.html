@@ -1,349 +1,760 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produtos e Serviços</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Área de Membros - Curso de Numerologia Cabalística</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
+        :root {
+            --primary-brown: #8B4513;
+            --secondary-brown: #A0522D;
+            --light-brown: #D2B48C;
+            --cream: #F5E6D3;
+            --dark-brown: #654321;
+            --shadow: rgba(101, 67, 33, 0.15);
+            --text-dark: #3E2723;
+            --text-light: #6D4C41;
+        }
+
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f7f9fc;
-            color: #333;
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, var(--cream) 0%, #F9F4E8 100%);
+            color: var(--text-dark);
             line-height: 1.6;
         }
-        
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-brown) 0%, var(--secondary-brown) 100%);
+            padding: 2rem 0;
+            box-shadow: 0 4px 20px var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="%23ffffff" opacity="0.1"/><circle cx="80" cy="40" r="1.5" fill="%23ffffff" opacity="0.1"/><circle cx="40" cy="80" r="1" fill="%23ffffff" opacity="0.1"/></svg>');
+            opacity: 0.3;
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
         }
-        
-        header {
+
+        .header-content {
             text-align: center;
-            padding: 40px 20px;
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
             color: white;
-            border-radius: 12px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
-        
-        header h1 {
-            font-size: 2.8rem;
-            font-weight: 700;
-            margin-bottom: 10px;
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
-        
-        header p {
+
+        .header p {
             font-size: 1.2rem;
             opacity: 0.9;
-            max-width: 700px;
+        }
+
+        /* Navigation */
+        .nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-brown);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-brown);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px var(--shadow);
+            margin: 2rem 0;
+            border: 1px solid rgba(139, 69, 19, 0.1);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .progress-title {
+            font-size: 1.3rem;
+            color: var(--dark-brown);
+            font-weight: 600;
+        }
+
+        .progress-percentage {
+            background: linear-gradient(135deg, var(--primary-brown), var(--secondary-brown));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            background: #E8D5C4;
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--primary-brown), var(--secondary-brown));
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 6px;
+        }
+
+        /* Lessons Grid */
+        .lessons-section {
+            margin: 3rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--dark-brown);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-brown), var(--secondary-brown));
+            border-radius: 2px;
+        }
+
+        .lessons-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        /* Lesson Card */
+        .lesson-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(139, 69, 19, 0.1);
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(101, 67, 33, 0.2);
+        }
+
+        .lesson-header {
+            background: linear-gradient(135deg, var(--light-brown), var(--cream));
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(139, 69, 19, 0.1);
+        }
+
+        .lesson-number {
+            display: inline-block;
+            background: var(--primary-brown);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-title {
+            font-size: 1.4rem;
+            color: var(--dark-brown);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-subtitle {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .lesson-content {
+            padding: 2rem;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .download-section {
+            text-align: center;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #F9F4E8, var(--cream));
+            border-radius: 15px;
+            margin-top: 1rem;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-brown), var(--secondary-brown));
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .download-btn:hover::before {
+            left: 100%;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
+        }
+
+        .download-icon {
+            margin-right: 0.5rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--dark-brown), var(--primary-brown));
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 600px;
             margin: 0 auto;
         }
-        
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 50px;
+
+        .footer h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
         }
-        
-        .product-card {
-            background-color: white;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
+
+        .footer p {
+            opacity: 0.9;
+            line-height: 1.8;
         }
-        
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-        }
-        
-        .product-header {
-            padding: 25px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            text-align: center;
-        }
-        
-        .product-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            color: #2575fc;
-        }
-        
-        .product-title {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-        
-        .product-content {
-            padding: 25px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .product-description {
-            color: #5a6c7d;
-            margin-bottom: 20px;
-            font-size: 1rem;
-            line-height: 1.7;
-        }
-        
-        .price-tag {
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            margin: 15px 0;
-            border-left: 4px solid #2575fc;
-        }
-        
-        .price {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: #2c3e50;
-        }
-        
-        .price-free {
-            color: #27ae60;
-        }
-        
-        .price-paid {
-            color: #e74c3c;
-        }
-        
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 18px;
-            text-align: center;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 10px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
-            margin-top: auto;
-        }
-        
-        .btn-primary {
-            background-color: #2575fc;
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background-color: #1a68e8;
-            box-shadow: 0 5px 15px rgba(37, 117, 252, 0.3);
-        }
-        
-        .btn-secondary {
-            background-color: #6c757d;
-            color: white;
-        }
-        
-        .btn-secondary:hover {
-            background-color: #5a6268;
-            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
-        }
-        
-        .badge {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-        
-        .badge-paid {
-            background-color: rgba(231, 76, 60, 0.1);
-            color: #e74c3c;
-        }
-        
-        .badge-free {
-            background-color: rgba(39, 174, 96, 0.1);
-            color: #27ae60;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 30px 20px;
-            color: #7f8c8d;
-            font-size: 0.9rem;
-            border-top: 1px solid #eee;
-            margin-top: 30px;
-        }
-        
-        .payment-notice {
-            background-color: #fff8e1;
-            border-left: 4px solid #ffc107;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 30px;
-            font-size: 0.95rem;
-        }
-        
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .products-grid {
-                grid-template-columns: 1fr;
+            .header h1 {
+                font-size: 2rem;
             }
-            
-            header h1 {
-                font-size: 2.2rem;
+
+            .nav-content {
+                flex-direction: column;
+                gap: 1rem;
             }
-            
-            .product-card {
-                max-width: 400px;
-                margin: 0 auto;
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .lesson-content {
+                padding: 1.5rem;
             }
         }
-        
-        @media (max-width: 480px) {
-            .container {
-                padding: 15px;
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
             }
-            
-            header {
-                padding: 30px 15px;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
-            
-            header h1 {
-                font-size: 1.8rem;
-            }
+        }
+
+        .lesson-card {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(139, 69, 19, 0.1);
+            z-index: 1000;
+        }
+
+        .scroll-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-brown), var(--secondary-brown));
+            width: 0%;
+            transition: width 0.3s ease;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Produtos e Serviços</h1>
-            <p>Escolha entre nossas soluções especializadas para atender suas necessidades</p>
-        </header>
-        
-        <div class="products-grid">
-            <!-- Produto 1: Unlocktool -->
-            <div class="product-card">
-                <div class="product-header">
-                    <div class="product-icon">
-                        <i class="fas fa-unlock-alt"></i>
-                    </div>
-                    <h2 class="product-title">Unlocktool</h2>
-                </div>
-                <div class="product-content">
-                    <div class="badge badge-paid">Pago</div>
-                    <p class="product-description">
-                        Ferramenta completa para desbloqueio de dispositivos. Compatível com diversos modelos e marcas. 
-                        Solução eficiente e confiável para profissionais da área.
-                    </p>
-                    <div class="price-tag">
-                        <div class="price price-paid">R$ 180,00</div>
-                    </div>
-                    <a href="https://pixgo.org/api/v1/checkout/checkout-public.php?id=0f85eecacd26bd3d194f4b00f9512245" class="btn btn-primary" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Comprar Agora
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Produto 2: Remoto -->
-            <div class="product-card">
-                <div class="product-header">
-                    <div class="product-icon">
-                        <i class="fas fa-laptop-house"></i>
-                    </div>
-                    <h2 class="product-title">Remoto</h2>
-                </div>
-                <div class="product-content">
-                    <div class="badge badge-free">Gratuito</div>
-                    <p class="product-description">
-                        Serviço de suporte remoto para configurações e troubleshooting. 
-                        Conecte-se com nossos especialistas para resolver problemas técnicos à distância.
-                    </p>
-                    <div class="price-tag">
-                        <div class="price price-free">R$ 0,00</div>
-                    </div>
-                    <a href="https://pixgo.org/api/v1/checkout/checkout-public.php?id=039aaec4be0c743957de394b38cfdc18" class="btn btn-secondary" target="_blank">
-                        <i class="fas fa-external-link-alt"></i> Acessar Serviço
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Produto 3: Consultoria -->
-            <div class="product-card">
-                <div class="product-header">
-                    <div class="product-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h2 class="product-title">Consultoria</h2>
-                </div>
-                <div class="product-content">
-                    <div class="badge badge-free">Gratuito</div>
-                    <p class="product-description">
-                        Consultoria especializada para tirar dúvidas e orientar sobre nossos produtos e serviços. 
-                        Suporte personalizado para otimizar o uso de nossas soluções.
-                    </p>
-                    <div class="price-tag">
-                        <div class="price price-free">R$ 0,00</div>
-                    </div>
-                    <a href="https://pixgo.org/api/v1/checkout/checkout-public.php?id=0552132f59fb7e592df966cf632c1eb3" class="btn btn-secondary" target="_blank">
-                        <i class="fas fa-external-link-alt"></i> Agendar Consultoria
-                    </a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="payment-notice">
-            <p><i class="fas fa-info-circle"></i> <strong>Informação importante:</strong> Todos os pagamentos são processados de forma segura através do nosso sistema de pagamento. Você será redirecionado para uma página segura para concluir sua compra.</p>
-        </div>
-        
-        <footer>
-            <p>&copy; 2023 Produtos e Serviços. Todos os direitos reservados.</p>
-            <p>Em caso de dúvidas, entre em contato conosco.</p>
-        </footer>
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
     </div>
-    
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1>Curso de Numerologia Cabalística</h1>
+                <p>Descubra os segredos ocultos dos números e transforme sua jornada</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">Numerologia Cabalística</div>
+                <ul class="nav-links">
+                    <li><a href="#home">Início</a></li>
+                    <li><a href="#lessons">Aulas</a></li>
+                    <li><a href="#resources">Recursos</a></li>
+                    <li><a href="#support">Suporte</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Progress Section -->
+        <div class="progress-container">
+            <div class="progress-header">
+                <h2 class="progress-title">Seu Progresso no Curso</h2>
+                <span class="progress-percentage" id="progressPercentage">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p style="margin-top: 1rem; color: var(--text-light);">
+                Complete todas as aulas para desbloquear seu certificado!
+            </p>
+        </div>
+
+        <!-- Lessons Section -->
+        <section class="lessons-section" id="lessons">
+            <h2 class="section-title">Trilha de Estudos</h2>
+            
+            <div class="lessons-grid">
+                <!-- Aula 0 -->
+                <div class="lesson-card" data-lesson="0">
+                    <div class="lesson-header">
+                        <span class="lesson-number">Aula 0</span>
+                        <h3 class="lesson-title">Boas-vindas, comece por aqui</h3>
+                        <p class="lesson-subtitle">Apresentação do curso e preparação para sua jornada</p>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/oSQ4EjIMnZ0?si=4CnGKkttY6q-Jy_w" 
+                                    title="YouTube video player" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    referrerpolicy="strict-origin-when-cross-origin" 
+                                    allowfullscreen>
+                            </iframe>
+                        </div>
+                        <p style="color: var(--text-light); text-align: center; font-style: italic;">
+                            Bem-vindo(a) ao seu curso de Numerologia Cabalística! Comece sua jornada de autoconhecimento.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Aula 1 -->
+                <div class="lesson-card" data-lesson="1">
+                    <div class="lesson-header">
+                        <span class="lesson-number">Aula 1</span>
+                        <h3 class="lesson-title">Números de impressão, expressão, motivação e destino</h3>
+                        <p class="lesson-subtitle">Os pilares fundamentais da numerologia cabalística</p>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/tyO_XbNIEzs?si=ej0JTHENRbmi3RtU" 
+                                    title="YouTube video player" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    referrerpolicy="strict-origin-when-cross-origin" 
+                                    allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="download-section">
+                            <a href="https://drive.google.com/drive/folders/14esLmlVBf7Jqi_5N1ER5HfPoBw8e6M4K?usp=sharing" 
+                               class="download-btn" 
+                               target="_blank">
+                                <span class="download-icon">📁</span>
+                                Clique aqui para baixar os arquivos da aula 1
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aula 2 -->
+                <div class="lesson-card" data-lesson="2">
+                    <div class="lesson-header">
+                        <span class="lesson-number">Aula 2</span>
+                        <h3 class="lesson-title">Dívidas cármicas, ano pessoal, números favoráveis</h3>
+                        <p class="lesson-subtitle">Aprofundando nos ciclos e energias numéricas</p>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/_hzsaqxPpHg?si=HKJMAWZK7xhmYcRC" 
+                                    title="YouTube video player" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    referrerpolicy="strict-origin-when-cross-origin" 
+                                    allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="download-section">
+                            <a href="https://drive.google.com/drive/folders/1AWaXxF1mSSX9z--DZeQ2noKOQN2HXx05?usp=sharing" 
+                               class="download-btn" 
+                               target="_blank">
+                                <span class="download-icon">📁</span>
+                                Clique aqui para baixar os arquivos da aula 2
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aula Extra -->
+                <div class="lesson-card" data-lesson="extra">
+                    <div class="lesson-header">
+                        <span class="lesson-number">Aula Extra</span>
+                        <h3 class="lesson-title">Tirando dúvidas da aula 2</h3>
+                        <p class="lesson-subtitle">Esclarecimentos e aprofundamentos</p>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/PZxvYGdvPAw?si=IwEcLmouuS8pRz_l" 
+                                    title="YouTube video player" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    referrerpolicy="strict-origin-when-cross-origin" 
+                                    allowfullscreen>
+                            </iframe>
+                        </div>
+                        <p style="color: var(--text-light); text-align: center; font-style: italic;">
+                            Aproveite para tirar todas as suas dúvidas sobre os conceitos aprendidos.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Aula 3 -->
+                <div class="lesson-card" data-lesson="3">
+                    <div class="lesson-header">
+                        <span class="lesson-number">Aula 3</span>
+                        <h3 class="lesson-title">Ciclos de vida e momentos decisivos</h3>
+                        <p class="lesson-subtitle">Compreendendo as fases da jornada numérica</p>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/eIGzJocRbo8?si=U_7qtiduV9HOWqMA" 
+                                    title="YouTube video player" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    referrerpolicy="strict-origin-when-cross-origin" 
+                                    allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="download-section">
+                            <a href="https://drive.google.com/drive/folders/1SL48AQTGDDPaf_LTfiNwp2W1Tjv0D2az?usp=sharing" 
+                               class="download-btn" 
+                               target="_blank">
+                                <span class="download-icon">📁</span>
+                                Clique aqui para baixar os arquivos da aula 3
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aula 4 -->
+                <div class="lesson-card" data-lesson="4">
+                    <div class="lesson-header">
+                        <span class="lesson-number">Aula 4</span>
+                        <h3 class="lesson-title">Triângulo invertido, arcanos, sequências negativas e cores favoráveis</h3>
+                        <p class="lesson-subtitle">Simbologias e interpretações avançadas</p>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/n28WAdep-Zk?si=BMxrZz06-tNmnHfK" 
+                                    title="YouTube video player" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    referrerpolicy="strict-origin-when-cross-origin" 
+                                    allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="download-section">
+                            <a href="https://drive.google.com/drive/folders/1463Gf304CQodlDXs_B69b6XqUQfpQyRd?usp=sharing" 
+                               class="download-btn" 
+                               target="_blank">
+                                <span class="download-icon">📁</span>
+                                Clique aqui para baixar os arquivos da aula 4
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aula 5 -->
+                <div class="lesson-card" data-lesson="5">
+                    <div class="lesson-header">
+                        <span class="lesson-number">Aula 5</span>
+                        <h3 class="lesson-title">Número psíquico, relação intervalores, profissões recomendadas, nome de casada e como estruturar o mapa</h3>
+                        <p class="lesson-subtitle">Aplicações práticas e montagem do mapa completo</p>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/JuQj0BMw00w?si=jtuVizb5EqFzye7p" 
+                                    title="YouTube video player" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    referrerpolicy="strict-origin-when-cross-origin" 
+                                    allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="download-section">
+                            <a href="https://drive.google.com/drive/folders/1jq0Bw-d0QKr2NYhrTm6-wcGA30xaIEOO?usp=sharing" 
+                               class="download-btn" 
+                               target="_blank">
+                                <span class="download-icon">📁</span>
+                                Clique aqui para baixar os arquivos da aula 5
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aula Final -->
+                <div class="lesson-card" data-lesson="final">
+                    <div class="lesson-header">
+                        <span class="lesson-number">Aula Final</span>
+                        <h3 class="lesson-title">Talento Oculto</h3>
+                        <p class="lesson-subtitle">Descubra seu dom especial através dos números</p>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/7PzPinBM2z4?si=tXfFyhGeVJcnpg2h" 
+                                    title="YouTube video player" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    referrerpolicy="strict-origin-when-cross-origin" 
+                                    allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="download-section">
+                            <a href="https://drive.google.com/file/d/10ZXGUJwVsYlGPDwcDCxeHBRLzD80Xj_V/view?usp=sharing" 
+                               class="download-btn" 
+                               target="_blank">
+                                <span class="download-icon">📁</span>
+                                Clique aqui para baixar os arquivos da aula final
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <h3>💫 Continue sua jornada de autoconhecimento</h3>
+                <p>
+                    A numerologia cabalística é uma ferramenta poderosa para compreender sua missão de vida. 
+                    Pratique com responsabilidade e compartilhe seus conhecimentos com sabedoria.
+                </p>
+                <p style="margin-top: 1rem; opacity: 0.7;">
+                    © 2024 Curso de Numerologia Cabalística. Todos os direitos reservados.
+                </p>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        // Adicionar efeito de confirmação ao clicar nos botões
-        document.querySelectorAll('.btn').forEach(button => {
-            button.addEventListener('click', function(e) {
-                const productName = this.closest('.product-card').querySelector('.product-title').textContent;
-                
-                if (this.classList.contains('btn-primary')) {
-                    // Para produto pago
-                    if (!confirm(`Você está sendo redirecionado para a página de pagamento do produto: ${productName}. Deseja continuar?`)) {
-                        e.preventDefault();
+        // Scroll Progress Indicator
+        window.addEventListener('scroll', () => {
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('scrollProgress').style.width = scrolled + '%';
+        });
+
+        // Lesson Progress Tracking
+        let completedLessons = 0;
+        const totalLessons = 7; // Excluding the extra lesson for progress calculation
+        const lessonCards = document.querySelectorAll('.lesson-card');
+
+        // Check if videos are being watched (simple implementation)
+        function updateProgress() {
+            completedLessons = Math.min(completedLessons + 1, totalLessons);
+            const percentage = Math.round((completedLessons / totalLessons) * 100);
+            
+            document.getElementById('progressPercentage').textContent = percentage + '%';
+            document.getElementById('progressFill').style.width = percentage + '%';
+        }
+
+        // Simulate progress on page load (in a real implementation, this would track actual video watching)
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize with 0% progress
+            updateProgress();
+            
+            // Add click listeners to lesson cards to simulate progress
+            lessonCards.forEach((card, index) => {
+                card.addEventListener('click', () => {
+                    if (!card.classList.contains('completed')) {
+                        card.classList.add('completed');
+                        setTimeout(updateProgress, 1000); // Simulate delay for watching
                     }
-                } else {
-                    // Para produtos gratuitos
-                    if (!confirm(`Você está sendo redirecionado para a página do serviço: ${productName}. Deseja continuar?`)) {
-                        e.preventDefault();
-                    }
+                });
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
             });
         });
-        
-        // Adicionar animação de carregamento suave
-        window.addEventListener('load', function() {
-            document.body.style.opacity = '0';
-            document.body.style.transition = 'opacity 0.5s ease';
+
+        // Add loading animation for videos
+        const videoContainers = document.querySelectorAll('.video-container');
+        videoContainers.forEach(container => {
+            container.addEventListener('mouseenter', () => {
+                container.style.transform = 'scale(1.02)';
+                container.style.transition = 'transform 0.3s ease';
+            });
             
-            setTimeout(function() {
-                document.body.style.opacity = '1';
-            }, 100);
+            container.addEventListener('mouseleave', () => {
+                container.style.transform = 'scale(1)';
+            });
+        });
+
+        // Add intersection observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all lesson cards
+        lessonCards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
         });
     </script>
 </body>
